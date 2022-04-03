@@ -1,0 +1,52 @@
+calculator()
+function calculator () {
+    //Initial Values
+    let total ='';
+    let answerArray =[];
+    let finalAnswer ;
+
+    //Making Buttons Operational
+    let numbers = document.querySelectorAll('.number')
+    let operators =document.querySelectorAll('.operator')    
+    numbers.forEach(element =>element.addEventListener('click',combineNumbers))
+    operators.forEach(element=>element.addEventListener('click',calculate))
+    document.getElementById('equal').addEventListener('click',equals)
+
+    //Concatenate Selected Numbers
+    function combineNumbers(event){
+        total += event.target.innerHTML.trim()
+        document.getElementById('total').innerHTML = total
+    }
+
+    //Save Operator Selected and First number
+    function calculate (event) {
+        answerArray[0]=total
+        total=''
+        selectedOperator = event.target.innerHTML.trim()
+        return selectedOperator
+    }
+
+    function equals () {
+        answerArray[1]=total
+        let firstNum = parseInt(answerArray[0])
+        let secondNum = parseInt(answerArray[1])
+        switch(selectedOperator){
+            case '+':
+                finalAnswer = firstNum+secondNum;
+                break;
+            case '-':
+                finalAnswer = firstNum-secondNum;
+                break
+            case 'X':
+                finalAnswer = firstNum*secondNum;
+                break
+            case '/':
+                finalAnswer = firstNum/secondNum;
+                break
+        }
+        document.getElementById('total').innerHTML = finalAnswer
+        //Reset to let user continue to calculate 
+        total =finalAnswer
+        finalAnswer=0
+    }
+}
